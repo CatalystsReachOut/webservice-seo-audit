@@ -1,0 +1,11 @@
+node_modules/
+data/
+!/**/.gitkeep
+*.csv
+*.xlsx
+.~*
+/*.json
+!package.json
+!package-data.json
+!package-lock.json
+*.code-workspace

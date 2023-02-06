@@ -1,0 +1,56 @@
+---
+version: '3'
+
+services:
+
+  backend:
+    image: viasite/site-audit-seo:latest
+    container_name: ${NAMESPACE}-backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: ${SERVER_PORT}
+      YAKE_SERVER_URL: ${YAKE_SERVER_URL}
+    ports:
+    - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+    # - .:/app
+    - ./data:/app/data
+    - ./data/reports:/app/data/reports
+    # - ./data/db-docker.json:/app/data/db.json
+    # networks:
+    # - internal
+    # - web
+
+  frontend:
+    image: viasite/site-audit-seo-viewer:latest
+    container_name: ${NAMESPACE}-frontend
+    build: data/front
+    environment:
+      HOST: 0.0.0.0 # for nuxt
+      PORT: ${FRONT_PORT}
+      SERVER_URL: ${SERVER_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      JSON_URL: ${JSON_URL}
+      SCAN_DEFAULT_MAX_REQUESTS: ${SCAN_DEFAULT_MAX_REQUESTS}
+    ports:
+    - ${FRONT_PORT}:${FRONT_PORT}
+    # networks:
+    # - web
+    # volumes:
+    # - ./data/reports:/app/static/reports
+
+  yake:
+    image: liaad/yake-server
+    container_name: ${NAMESPACE}-yake
+    restart: always
+    ports:
+    - 5303:5000
+
+# networks:
+#   internal:
+#     driver: bridge
+#   web:
+#     external: true

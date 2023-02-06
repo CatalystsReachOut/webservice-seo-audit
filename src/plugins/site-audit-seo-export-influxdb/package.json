@@ -1,0 +1,11 @@
+{
+  "name": "site-audit-seo-export-influxdb",
+  "site-audit-seo": {
+    "plugins": {
+      "export-influxdb": {
+        "main": "sendToInfluxDB.js",
+        "type": "afterScan"
+      }
+    }
+  }
+}

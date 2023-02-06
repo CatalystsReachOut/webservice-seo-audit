@@ -1,0 +1,53 @@
+{
+  "name": "site-audit-seo",
+  "version": "5.1.5",
+  "description": "Web service and CLI tool for SEO site audit: crawl site, lighthouse all pages, view public reports in browser. Also output to console, json, csv, xlsx, Google Drive.",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/viasite/site-audit-seo.git"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "server": "node src/server.js",
+    "version": "npm run changelog && git add CHANGELOG.md",
+    "postversion": "git push && npm run release",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --config changelog-config.js",
+    "release": "conventional-github-releaser -p angular && npm publish && npm run deploy",
+    "deploy": "test -e data/deploy.sh && bash data/deploy.sh || echo no deploy script",
+    "postinstall-puppeteer-fix": "sudo chown -R $USER:$USER \"$(npm prefix -g)/lib/node_modules/site-audit-seo/node_modules/puppeteer/.local-chromium/\""
+  },
+  "bin": {
+    "site-audit-seo": "./src/index.js"
+  },
+  "author": "Stanislav Popov",
+  "license": "ISC",
+  "dependencies": {
+    "@popstas/headless-chrome-crawler": "^1.8.3",
+    "@popstas/xlsx-style": "^0.8.20",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "chrome-launcher": "^0.13.4",
+    "commander": "^5.0.0",
+    "csvtojson": "^2.0.10",
+    "expand-home-dir": "0.0.3",
+    "express": "^4.17.1",
+    "googleapis": "^59.0.0",
+    "influx": "^5.6.3",
+    "lighthouse": "^6.2.0",
+    "lowdb": "^1.0.0",
+    "queue": "^6.0.1",
+    "sanitize-filename": "^1.6.3",
+    "socket.io": "^2.3.0",
+    "xlsx": "^0.15.6"
+  },
+  "keywords": [
+    "audit",
+    "crawler",
+    "scraper",
+    "puppeteer",
+    "seo",
+    "cli",
+    "xlsx"
+  ]
+}
